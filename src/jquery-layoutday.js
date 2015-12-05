@@ -1,6 +1,5 @@
 /*
  * @author Alberto Colella
- * alberto.colella@gmail.com
  */
 
 /**
@@ -20,23 +19,23 @@
 
     // default settings.
     var settings = {
-            calendar_width: 600,
-            calendar_height: 720,
+            calendar_width: null,
+            calendar_height: null,
+            calendar_start: 0,
+            calendar_end: 1440,
             events_selector: ".events"
         };
-    
+
     /**
      * Initializes a Calendar stage
      * @param options
      *      Hash of settings. Optional.
      */
     $.fn.layOutDay = function(options){
-      if(options){
-       settings  = $.extend({}, settings, options);
-        $(settings.events_selector).css('width', settings.calendar_width);
-      }
+      options = options || {};
+      settings  = $.extend({}, settings, options);
       if(!$.cal){
-        $.cal = new Calendar(settings);
+        $.cal = new Calendar(settings, this);
       }
     };
 
@@ -81,8 +80,9 @@
         this.options.col = 0;
         this.id = this.ev.start + "-" + this.ev.end + '-' + this.options.pos;
         this.el = $('<div id="' + this.id + '" class="event"><span class="title">Sample Item</span><br /><span class="subtitle">Sample Location</span><br /><span class="debug">' + this.ev.start + ":" + this.ev.end + "</span></div>");
-        $(this.el).css('height', (Math.abs(this.ev.start-this.ev.end)));
-        $(this.el).css('top',this.ev.start);
+        var unit = settings.calendar_height / settings.calendar_end;
+        $(this.el).css('height', unit*(Math.abs(this.ev.start-this.ev.end)));
+        $(this.el).css('top', unit*this.ev.start);
         return this;
       };
 
@@ -94,7 +94,7 @@
       this.getEl = function () {
         return $(this.el);
       };
-        
+
       /**
        * Gets Event's start coordinate.
        * @return
@@ -103,7 +103,7 @@
       this.getStart = function () {
         return this.ev.start;
       };
-    
+
       /**
        * Gets Event's end coordinate.
        * @return
@@ -208,7 +208,7 @@
      */
     var ElementValidator = function (settings) {
         var error = null;
-        
+
         /**
          * Validates Event's input coordinates.
          * @param ev
@@ -237,9 +237,12 @@
               if (parseInt(ev.start, 10) !== ev.start || parseInt(ev.end, 10) !== ev.end ) {
                throw new Error("Please pass a param with 'start' and 'end' keys containing integer.");
               }
-              if (ev.start < 0 || ev.end > settings.calendar_height) {
-               throw new Error("Please pass a param with 'start' and 'end' values between 0 and " + settings.calendar_height + ".");
+              if (ev.start < 0) {
+               throw new Error("Please pass a param with 'start' value bigger than 0.");
               }
+              /*if (ev.end > settings.calendar_height) {
+               throw new Error("Please pass a param with 'start' and 'end' values between 0 and " + settings.calendar_height + ".");
+             }*/
               if (ev.start >= ev.end) {
                throw new Error("Please pass a param with 'start' value lower than 'end' value ("+ev.start+":"+ev.end+" passed).");
               }
@@ -258,12 +261,13 @@
      * @param settings
      *      Plugin's settings.
      */
-    var Calendar = function (settings) {
-      
+    var Calendar = function (settings, element) {
+
       var cal_events = [];
       this.ids = [];
       this.matrix = [];
-      
+      this.element = element;
+
       /**
        * Adds an Event to Calendar stage.
        * @param ev
@@ -313,7 +317,8 @@
         min_width = this.resizeCollidingEvents(colliding_ev);
         ev.resize(min_width-1);
         ev.setCol(col);
-        ev.move((col*min_width)+10);
+        //ev.move((col*min_width)+10);
+        ev.move(col*min_width);
       };
 
       /**
@@ -420,11 +425,12 @@
         }
         for(var h=0;h<colliding_ev.length;h++){
             colliding_ev[h].resize(min_width-1);
-            colliding_ev[h].move((colliding_ev[h].getCol()*min_width)+10);
+            //colliding_ev[h].move((colliding_ev[h].getCol()*min_width)+10);
+            colliding_ev[h].move(colliding_ev[h].getCol()*min_width);
         }
         return min_width;
       };
-      
+
       /**
        * Renders an Event on Calendar stage.
        * @param ev
@@ -433,7 +439,42 @@
       this.drawEvent = function(ev){
         $(settings.events_selector).append(ev.getEl());
       };
+
+      this.buildEventsPane = function(){
+        var events_el = $(this.element).find(settings.events_selector);
+        if(events_el.length==0){
+          if(settings.events_selector.indexOf('#') == 0) {
+             var events_tag = '<div id="'+settings.events_selector.substring(1)+'"></div>';
+          } else if(settings.events_selector.indexOf('.') == 0) {
+             var events_tag = '<div class="'+settings.events_selector.substring(1)+'"></div>';
+          }
+          events_el = $(events_tag);
+          $(this.element).append(events_el);
+        }
+        events_el.css('width', settings.calendar_width);
+      };
+
+      this.buildTimePane = function(){
+        // @TODO
+      };
+
+      this.buildPanes = function(){
+        this.buildEventsPane();
+        this.buildTimePane();
+      };
+
+      this.init = function(){
+        $(this.element).addClass('jquery-layoutday');
+        this.buildPanes();
+        if(!settings.calendar_width){
+          settings.calendar_width = $(this.element).find(settings.events_selector).innerWidth();
+        }
+        if(!settings.calendar_height){
+          settings.calendar_height = $(this.element).find(settings.events_selector).innerHeight();
+        }
+      };
+
+      this.init();
     };
 
 })(jQuery);
-

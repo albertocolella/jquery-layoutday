@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>QUnit basic example</title>
-<link rel="stylesheet" href="qunit-1.15.0.css">
-<script src="qunit-1.15.0.js"></script>
-<link rel="stylesheet" href="../style.css">
-<script src="../jquery-2.1.1.min.js"></script>
-<script src="jquery.overlaps.js"></script>
-<script src="../script.js"></script>
+<title>QUnit jQuery LayoutDay test page</title>
+<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+<link rel="stylesheet" href="../src/jquery-layoutday.css">
+<script src="http://code.jquery.com/qunit/qunit-1.20.0.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://raw.githubusercontent.com/brandonaaron/jquery-overlaps/f1a1d4b44e323127424af3cc1b9476b4c9e61e50/jquery.overlaps.js"></script>
+<script src="../src/jquery-layoutday.js"></script>
 </head>
 <body>
 <div id="qunit"></div>
@@ -35,12 +35,12 @@ function createEvents(num){
         var end = Math.floor(Math.random() * (720 - start)) + (start + 1);
         events.push({'start':start, 'end':end});
     }
-    
+
     return events;
 }
 QUnit.test( "default events", function( assert ) {
-    $('calendar').layOutDay();
-    $('calendar').addEvents([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ]);
+    $('#calendar').layOutDay();
+    $('#calendar').addEvents([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ]);
     var results = $('.event').overlaps();
     if(results.length>0){
         for(var i=0; i<results.length;i++){
@@ -54,8 +54,8 @@ QUnit.test( "default events", function( assert ) {
 });
 QUnit.test( "10 events", function( assert ) {
     var events = createEvents(10);
-    $('calendar').layOutDay();
-    $('calendar').addEvents(events);
+    $('#calendar').layOutDay();
+    $('#calendar').addEvents(events);
     var results = $('.event').overlaps();
     if(results.length>0){
         for(var i=0; i<results.length;i++){
@@ -68,8 +68,8 @@ QUnit.test( "10 events", function( assert ) {
 QUnit.test( "100 events", function( assert ) {
     var events = createEvents(100);
     console.log(events);
-    $('calendar').layOutDay();
-    $('calendar').addEvents(events);
+    $('#calendar').layOutDay();
+    $('#calendar').addEvents(events);
     var results = $('.event').overlaps();
     if(results.length>0){
         for(var i=0; i<results.length;i++){
@@ -81,7 +81,7 @@ QUnit.test( "100 events", function( assert ) {
 </script>
 <!--<div class="event" style="position:absolute;left:10px;top:10px;heigth:30px;width:30px;border:2px solid red;">HW01</div>
 <div class="event" style="position:absolute;left:2;top:20px;heigth:30px;width:30px;border:2px solid green;">HW02</div>-->
-<div class="calendar">
+<div id="calendar">
 <div class="time">
     <ul>
         <li>9:00 <span>AM</span></li>

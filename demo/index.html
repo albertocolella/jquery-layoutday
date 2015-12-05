@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="jquery-2.1.1.min.js"></script>
-<script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="../src/jquery-layoutday.js"></script>
+<link rel="stylesheet" type="text/css" href="../src/jquery-layoutday.css">
 <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8">
   <title>Calendar</title>
 <script>
 var layOutDay = function (cal_events){
-  $('calendar').addEvents(cal_events);
+  $('#calendar').addEvents(cal_events);
 };
 $( document ).ready(function() {
-    $('calendar').layOutDay();
+    $('#calendar').layOutDay();
     layOutDay([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ]);
 });
 </script>
 </head>
 <body>
-<div class="calendar">
-<div class="time">
+<div id="calendar">
+<!--<div class="time">
     <ul>
         <li>9:00 <span>AM</span></li>
         <li class="halfhour">9:30</li>
@@ -46,9 +47,8 @@ $( document ).ready(function() {
         <li class="halfhour">8:30</li>
         <li>9:00 <span>PM</span></li>
     </ul>
-</div>
-<div class="events"></div>
+</div>-->
+<!--<div class="events"></div>-->
 </div>
 </body>
 </html>
-

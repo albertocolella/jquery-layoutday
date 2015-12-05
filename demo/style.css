@@ -1,0 +1,14 @@
+html, body {
+  height: 100%;
+}
+body {
+  background-color: white;
+  color: #333333;
+  font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+  font-size: 12px;
+}
+#calendar {
+  margin-top:30px;
+  width: 600px;
+  height: 720px;
+}
