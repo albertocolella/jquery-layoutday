@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-2.1.1.min.js"></script>
+<script src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <title>Calendar</title>
+<script>
+var layOutDay = function (cal_events){
+  $('calendar').addEvents(cal_events);
+};
+$( document ).ready(function() {
+    $('calendar').layOutDay();
+    layOutDay([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ]);
+});
+</script>
+</head>
+<body>
+<div class="calendar">
+<div class="time">
+    <ul>
+        <li>9:00 <span>AM</span></li>
+        <li class="halfhour">9:30</li>
+        <li>10:00 <span>AM</span></li>
+        <li class="halfhour">10:30</li>
+        <li>11:00 <span>AM</span></li>
+        <li class="halfhour">11:30</li>
+        <li>12:00 <span>PM</span></li>
+        <li class="halfhour">12:30</li>
+        <li>1:00 <span>PM</span></li>
+        <li class="halfhour">1:30</li>
+        <li>2:00 <span>PM</span></li>
+        <li class="halfhour">2:30</li>
+        <li>3:00 <span>PM</span></li>
+        <li class="halfhour">3:30</li>
+        <li>4:00 <span>PM</span></li>
+        <li class="halfhour">4:30</li>
+        <li>5:00 <span>PM</span></li>
+        <li class="halfhour">5:30</li>
+        <li>6:00 <span>PM</span></li>
+        <li class="halfhour">6:30</li>
+        <li>7:00 <span>PM</span></li>
+        <li class="halfhour">7:30</li>
+        <li>8:00 <span>PM</span></li>
+        <li class="halfhour">8:30</li>
+        <li>9:00 <span>PM</span></li>
+    </ul>
+</div>
+<div class="events"></div>
+</div>
+</body>
+</html>
+

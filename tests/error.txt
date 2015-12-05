@@ -1,0 +1,4 @@
+layOutDay([{start:657,end:662},{start:484,end:585},{start:239,end:440},{start:475,end:554},{start:407,end:497},{start:687,end:687},{start:679,end:703},{start:149,end:654},{start:696,end:701},{start:620,end:692}]);
+-----------------------
+collisione: "179-658-0" -> "141-382-0"
+layOutDay([{ start=624, end=714}, { start=193, end=711}, { start=71, end=617}, { start=246, end=667}, { start=179, end=658}, { start=90, end=369}, { start=564, end=570}, { start=665, end=706}, { start=164, end=656}, { start=141, end=382}])
