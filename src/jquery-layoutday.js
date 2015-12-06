@@ -23,7 +23,8 @@
             calendar_height: null,
             calendar_start: 0,
             calendar_end: 1440,
-            events_selector: ".events"
+            events_selector: ".events",
+            time_selector: null
         };
 
     /**
@@ -455,7 +456,17 @@
       };
 
       this.buildTimePane = function(){
-        // @TODO
+        if(!settings.time_selector){
+          return;
+        }
+        var time_el = $(this.element).find('.time');
+        if(time_el.length==0){
+          time_el = $.find(settings.time_selector);
+          if(time_el.length>0){
+            time_el = $(time_el).addClass('time').remove();
+            $(this.element).prepend(time_el);
+          }
+        }
       };
 
       this.buildPanes = function(){
