@@ -9,6 +9,15 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://raw.githubusercontent.com/brandonaaron/jquery-overlaps/f1a1d4b44e323127424af3cc1b9476b4c9e61e50/jquery.overlaps.js"></script>
 <script src="../src/jquery-layoutday.js"></script>
+<style>
+html, body {
+  height: 100%;
+}
+#calendar {
+  width: 100%;
+  height: 100%;
+}
+</style>
 </head>
 <body>
 <div id="qunit"></div>
@@ -31,8 +40,8 @@
 function createEvents(num){
     var events = [];
     for(var i=0; i<num; i++){
-        var start = Math.floor(Math.random() * 720);
-        var end = Math.floor(Math.random() * (720 - start)) + (start + 1);
+        var start = Math.floor(Math.random() * 1440);
+        var end = Math.floor(Math.random() * (1440 - start)) + (start + 1);
         events.push({'start':start, 'end':end});
     }
 
@@ -81,38 +90,7 @@ QUnit.test( "100 events", function( assert ) {
 </script>
 <!--<div class="event" style="position:absolute;left:10px;top:10px;heigth:30px;width:30px;border:2px solid red;">HW01</div>
 <div class="event" style="position:absolute;left:2;top:20px;heigth:30px;width:30px;border:2px solid green;">HW02</div>-->
-<div id="calendar">
-<div class="time">
-    <ul>
-        <li>9:00 <span>AM</span></li>
-        <li class="halfhour">9:30</li>
-        <li>10:00 <span>AM</span></li>
-        <li class="halfhour">10:30</li>
-        <li>11:00 <span>AM</span></li>
-        <li class="halfhour">11:30</li>
-        <li>12:00 <span>PM</span></li>
-        <li class="halfhour">12:30</li>
-        <li>1:00 <span>PM</span></li>
-        <li class="halfhour">1:30</li>
-        <li>2:00 <span>PM</span></li>
-        <li class="halfhour">2:30</li>
-        <li>3:00 <span>PM</span></li>
-        <li class="halfhour">3:30</li>
-        <li>4:00 <span>PM</span></li>
-        <li class="halfhour">4:30</li>
-        <li>5:00 <span>PM</span></li>
-        <li class="halfhour">5:30</li>
-        <li>6:00 <span>PM</span></li>
-        <li class="halfhour">6:30</li>
-        <li>7:00 <span>PM</span></li>
-        <li class="halfhour">7:30</li>
-        <li>8:00 <span>PM</span></li>
-        <li class="halfhour">8:30</li>
-        <li>9:00 <span>PM</span></li>
-    </ul>
-</div>
-<div class="events"></div>
-</div>
+<div id="calendar"></div>
 </body>
 </html>
 
