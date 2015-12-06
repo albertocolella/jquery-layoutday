@@ -5,6 +5,7 @@
   background-color: #ececec;
   border-left: 1px solid #D5D5D5;
   height: 100%;
+  overflow: hidden;
   padding: 0 10px;
   position: relative;
 }

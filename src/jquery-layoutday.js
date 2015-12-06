@@ -80,9 +80,9 @@
         this.options.col = 0;
         this.id = this.ev.start + "-" + this.ev.end + '-' + this.options.pos;
         this.el = $('<div id="' + this.id + '" class="event"><span class="title">Sample Item</span><br /><span class="subtitle">Sample Location</span><br /><span class="debug">' + this.ev.start + ":" + this.ev.end + "</span></div>");
-        var unit = settings.calendar_height / settings.calendar_end;
+        var unit = settings.calendar_height / (settings.calendar_end-settings.calendar_start);
         $(this.el).css('height', unit*(Math.abs(this.ev.start-this.ev.end)));
-        $(this.el).css('top', unit*this.ev.start);
+        $(this.el).css('top', unit*(this.ev.start-settings.calendar_start));
         return this;
       };
 

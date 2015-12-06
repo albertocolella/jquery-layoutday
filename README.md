@@ -55,16 +55,16 @@ $( document ).ready(function() {
 
 ```javascript
 $('your-calendar-selector').layOutDay({
-  'calendar_width': 600,  // calendar width pixels (optional)
-  'calendar_height': 720, // calendar height pixels (optional)
+  'calendar_start': 0, // minimum time of the day, expressed in minutes past midnight (optional)
+  'calendar_end': 1440, // max time of the day, expressed in minutes past midnight (optional)
   'events_selector': ".events"  // calendar events selector (optional)
 });
 ```
 
 ```javascript
   var yourEvents = [
-    {start: 30, end: 150}, // start and end are the minutes from midnigth
-    {start: 540, end: 600}, // start and end go from 0 to
+    {start: 30, end: 150}, // start and end are the minutes from midnight
+    {start: 540, end: 600}, // start and end go from calendar_start to calendar_end
     {start: 560, end: 620},
     {start: 610, end: 670}
   ];

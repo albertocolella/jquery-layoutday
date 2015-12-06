@@ -12,8 +12,14 @@ var layOutDay = function (cal_events){
   $('#calendar').addEvents(cal_events);
 };
 $( document ).ready(function() {
-    $('#calendar').layOutDay();
-    layOutDay([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ]);
+    $('#calendar').layOutDay({
+      'calendar_start': 540,
+      'calendar_end': 1260
+    });
+    layOutDay([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670},
+      {start: 1110, end: 1270},
+      {start: 1400, end: 1570} 
+    ]);
 });
 </script>
 </head>
