@@ -80,7 +80,7 @@
         this.colliding_events = [];
         this.options.col = 0;
         this.id = this.ev.start + "-" + this.ev.end + '-' + this.options.pos;
-        this.el = $('<div id="' + this.id + '" class="event"><span class="title">Sample Item</span><br /><span class="subtitle">Sample Location</span><br /><span class="debug">' + this.ev.start + ":" + this.ev.end + "</span></div>");
+        this.el = $('<div id="' + this.id + '" class="event"><span class="title">' + ev.title + '</span><br /><span class="subtitle">' + ev.description + '</span><br /><span class="debug">' + this.ev.start + ":" + this.ev.end + "</span></div>");
         var unit = settings.calendar_height / (settings.calendar_end-settings.calendar_start);
         $(this.el).css('height', unit*(Math.abs(this.ev.start-this.ev.end)));
         $(this.el).css('top', unit*(this.ev.start-settings.calendar_start));
@@ -229,23 +229,16 @@
               if ($.isEmptyObject(ev)) {
                throw new Error("Please pass a not empty param.");
               }
-              if (!ev.hasOwnProperty('start') || !ev.hasOwnProperty('end')) {
-               throw new Error("Please pass a param with 'start' and 'end' keys.");
+              if (!ev.hasOwnProperty('dateStart') || !ev.hasOwnProperty('dateEnd') || !ev.hasOwnProperty('title') || !ev.hasOwnProperty('description')) {
+               throw new Error("Please pass a param with 'dateStart' and 'dateEnd' and 'title' and 'description' keys.");
               }
-              if (isNaN(ev.start) || isNaN(ev.end)) {
-               throw new Error("Please pass a param with 'start' and 'end' keys containing numbers.");
+              if (!(ev.dateStart instanceof Date) || !(ev.dateEnd instanceof Date))
+              {
+               throw new Error("Please pass a param 'dateStart' and 'dateEnd' instanceof Date.");
               }
-              if (parseInt(ev.start, 10) !== ev.start || parseInt(ev.end, 10) !== ev.end ) {
-               throw new Error("Please pass a param with 'start' and 'end' keys containing integer.");
-              }
-              if (ev.start < 0) {
-               throw new Error("Please pass a param with 'start' value bigger than 0.");
-              }
-              /*if (ev.end > settings.calendar_height) {
-               throw new Error("Please pass a param with 'start' and 'end' values between 0 and " + settings.calendar_height + ".");
-             }*/
-              if (ev.start >= ev.end) {
-               throw new Error("Please pass a param with 'start' value lower than 'end' value ("+ev.start+":"+ev.end+" passed).");
+              if (ev.dateEnd.getTime() < ev.dateStart.getTime())
+              {
+               throw new Error("Please pass a param with 'dateStart' value lower than 'dateEnd' value ("+ev.dateStart.getTime()+":"+ev.dateEnd.getTime()+" passed).");
               }
               return true;
             }
@@ -277,9 +270,32 @@
        *        The Event or false if coordinates validation fails.
        */
       this.addEvent = function(ev){
+        ev = ev.event;
         var validator = new ElementValidator(settings);
         if(validator.validate(ev)){
             var options = {};
+
+            var start = ev.dateStart,
+                then = new Date(
+                    start.getFullYear(),
+                    start.getMonth(),
+                    start.getDate(),
+                    0,0,0),
+                millisecondsToMidnightForStart = start.getTime() - then.getTime(),
+                minutesToMidnightForStart = Math.floor((millisecondsToMidnightForStart/1000/60) << 0); // differenza da mezzanotte in minuti
+
+            var end = ev.dateEnd,
+                then = new Date(
+                    end.getFullYear(),
+                    end.getMonth(),
+                    end.getDate(),
+                    0,0,0),
+                millisecondsToMidnightForEnd = end.getTime() - then.getTime(),
+                minutesToMidnightForEnd = Math.floor((millisecondsToMidnightForEnd/1000/60) << 0); // differenza da mezzanotte in minuti
+
+            ev["start"] = minutesToMidnightForStart;
+            ev["end"] = minutesToMidnightForEnd;
+
             if(this.ids[ev.start+"_"+ev.end]===undefined){
                 this.ids[ev.start+"_"+ev.end] = [];
             }
