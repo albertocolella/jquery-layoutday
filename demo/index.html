@@ -17,9 +17,17 @@ $( document ).ready(function() {
       'calendar_end': 1260,
       'time_selector': 'body .time'
     });
-    layOutDay([ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670},
-      {start: 1110, end: 1270},
-      {start: 1400, end: 1570}
+
+    calendarEvent = {
+                        dateStart: new Date(/* year */ 2017, /* month */ 01,  /* day */ 09, /* hour */ 18, /* minute */ 30, /* senconds */ 10, /* milliseconds */ 10),
+                        dateEnd: new Date(/* year */ 2017, /* month */ 01, /* day */ 09, /* hour */ 19, /* minute */ 30, /* senconds */ 10, /* milliseconds */ 10),
+                        title: "title",
+                        description: "description"
+                    }
+
+    layOutDay([
+        {event: calendarEvent},
+        {event: calendarEvent}
     ]);
 });
 </script>
